@@ -38,5 +38,4 @@ def delete_item(id: int, db: Session):
     
     item.delete(synchronize_session=False)
     db.commit()
-    return 'done'
-
+    return "Item Deleted"

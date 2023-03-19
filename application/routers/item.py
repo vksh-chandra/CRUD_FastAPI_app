@@ -55,7 +55,7 @@ def destroy(id: int, db: Session = Depends(get_db), current_user : schemas.Users
     if res == "error":
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Item with id {id} not found")
-    return "done"
+    return res
 
 
 
