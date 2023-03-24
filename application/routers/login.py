@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from core.contracts import models, schemas
 from core.service import get_db
 from core.service import token
+from core.service.hashing import Hash
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
@@ -24,6 +25,10 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
             detail="Incorrect user name or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    if not Hash.verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect password",
+            headers={"WWW-Authenticate": "Bearer"},)
     
     # We will create access token with expire time
     token_expire = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTE)
