@@ -14,14 +14,14 @@ router = APIRouter(
 
 
 # Create items
-@router.post('/', status_code=status.HTTP_201_CREATED)
+@router.post('/create', status_code=status.HTTP_201_CREATED)
 def create(request: schemas.Item, db : Session = Depends(get_db), current_users: schemas.Users = Depends(oauth2.get_current_user)):
     return items.create(request, db, current_users)
 
 
 # fetch all items
 @router.get('/', status_code=200, response_model=List[schemas.ShowItem])
-def get_all(db: Session = Depends(get_db), current_user: schemas.Users = Depends(oauth2.get_current_user)):
+def get_all(db: Session = Depends(get_db)):
     return items.get_all_item(db)
 
 
