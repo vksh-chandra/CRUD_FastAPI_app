@@ -1,7 +1,8 @@
-__pycache__/.
-fastapi-env
+myvenv
 .DS_Store
 .pytest_cache
 .vccode
 .deta
 .idea
+__pycache__
+
